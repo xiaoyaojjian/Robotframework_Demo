@@ -1,0 +1,34 @@
+*** Settings ***
+Test Setup        打开网页
+Test Teardown     关闭网页
+Library           AutoItLibrary
+Resource          resource.txt
+
+*** Test Cases ***
+处理对话框
+    Click Button    pay
+    Sleep    2s
+    ${mes}    Confirm Action
+    Sleep    2s
+    Choose Cancel On Next Confirmation
+    click button    paycon
+    Sleep    2s
+    ${mes}    Confirm Action
+    Sleep    2s
+    ${confirm}    Get Element Attribute    r@innerText
+    Choose Ok On Next Confirmation
+    Click Button    paycon
+    Sleep    2s
+    ${mes}    Confirm Action
+    Sleep    2s
+    ${confirm}    Get Element Attribute    r@innerText
+
+处理对话框AutoIt
+    判断平台
+    Click Button    pay
+    ${mes}    关闭对话框    来自网页的消息
+    Sleep    3s
+    Click Button    paycon
+    ${mes}    关闭对话框    来自网页的消息
+    Sleep    2s
+    ${confirm}    Get Element Attribute    r@innerText

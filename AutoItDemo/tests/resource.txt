@@ -1,0 +1,25 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+Library           OperatingSystem
+
+*** Keywords ***
+打开网页
+    Open Browser    http://localhost:8000/updown/    ie
+
+关闭网页
+    Close All Browsers
+
+关闭对话框
+    [Arguments]    ${title}    ${text}=
+    [Documentation]    关闭对话框
+    Win Wait    ${title}    ${text}    30
+    ${ret}=    Control Get Text    ${EMPTY}    ${EMPTY}    Static2
+    Log    ${ret}
+    Control CLICK    ${EMPTY}    ${EMPTY}    Button1
+    Comment    Win Close    ${title}
+    [Return]    ${ret}
+
+判断平台
+    ${sys}    Evaluate    sys.platform == 'darwin'    sys
+    Pass Execution If    '${sys}'=='True'    Mac系统不支持该案例
